@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
-import { useSelector, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux';
 
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
@@ -11,8 +11,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
 import Success from "./pages/Success";
-import { StoreProvider } from "./utils/GlobalState";
 import OrderHistory from "./pages/OrderHistory";
+import store from './utils/store';
 
 const client = new ApolloClient({
   request: (operation) => {
@@ -28,14 +28,11 @@ const client = new ApolloClient({
 
 function App() {
 
-  const reducer = useSelector( (state) => state.reducer)
-  const dispatch = useDispatch()
-
   return (
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <StoreProvider>
+        <Provider store={store}>
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
@@ -47,7 +44,7 @@ function App() {
               
               <Route component={NoMatch} />
             </Switch>
-          </StoreProvider>
+          </Provider>
         </div>
       </Router>
     </ApolloProvider>
