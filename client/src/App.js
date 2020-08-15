@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
+import { useSelector, useDispatch } from 'react-redux'
 
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
@@ -26,6 +27,10 @@ const client = new ApolloClient({
 })
 
 function App() {
+
+  const reducer = useSelector( (state) => state.reducer)
+  const dispatch = useDispatch()
+
   return (
     <ApolloProvider client={client}>
       <Router>
